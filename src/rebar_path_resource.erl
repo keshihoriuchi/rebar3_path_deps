@@ -6,9 +6,11 @@
          needs_update/2,
          make_vsn/1]).
 
+-define(Log(A),    io:format("[~p ~p:~p#~p] ~p~n",    [self(), ?MODULE, ?FUNCTION_NAME, ?LINE, A])).
 -include_lib("kernel/include/file.hrl").
 
 init(Type, _State) ->
+  ?Log(Type),
    Resource = rebar_resource_v2:new(Type, ?MODULE, #{}),
    {ok, Resource}.
 
@@ -67,6 +69,7 @@ needs_update_(Dir, {path, Path}) ->
 
 
 last_modified(Source) ->
+  ?Log(Source),
   Files = filter_files(dir_files(Source)),
   last_modified_(Files).
 
